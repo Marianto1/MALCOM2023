@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!--Libraries-->
+		<meta
+			name="viewport"
+			content="width=device-width, user-scalable=no,
+		initial-scale=1"
+		/>
+		<link rel="icon" type="image/png" href="assets/fav.png" />
+		<script defer src="lib/jquery.min.js"></script>
+		<script defer src="lib/anime.min.js"></script>
+		<script src="lib/aframe.min.js"></script>
+		<script defer src="lib/aframe-gif-shader.min.js"></script>
+		<script defer src="lib/aframe-look-at-component.min.js"></script>
+		<script defer src="lib/aframe-animation-component.min.js"></script>
+		<script defer src="lib/aframe-event-set-component.min.js"></script>
+		<link
+			rel="preload"
+			href="assets/bttn.min.css"
+			as="style"
+			onload="this.onload=null;this.rel='stylesheet'"
+		/>
+		<noscript><link rel="stylesheet" href="assets/bttn.min.css" /></noscript>
+		<link rel="preconnect" href="https://fonts.gstatic.com" />
+		<script defer src="lib/aframe-rounded-component.min.js"></script>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+			rel="stylesheet"
+		/>
+		<script defer src="lib/horizontalDialog.min.js"></script>
+		<script defer src="lib/mcq-lib.min.js"></script>
+		<script defer src="lib/script.js"></script>
+		<link
+			rel="preload"
+			href="assets/animate.min.css"
+			as="style"
+			onload="this.onload=null;this.rel='stylesheet'"
+		/>
+		<noscript><link rel="stylesheet" href="assets/animate.min.css" /></noscript>
+		<link rel="stylesheet" href="lib/loading.css" />
+		<link rel="stylesheet" href="styles.min.css" />
+		<title>MIMHS & MALCOM 2023</title>
+	</head>
+	<body>
+		<!--5 seconds loading screen-->
+		<!--
+		<div id="splashscreen">
+			<img id="logo" src="assets/ixtc.png" />
+			<div class="wrapper">
+				<div class="box-wrap">
+					<div class="box one"></div>
+					<div class="box two"></div>
+					<div class="box three"></div>
+					<div class="box four"></div>
+					<div class="box five"></div>
+					<div class="box six"></div>
+				</div>
+			</div>
+		</div>
+		-->
+		<!--Description of the application-->
+		<div id="contentPage">
+			<div id="leftHalf"></div>
+			<div id="rightHalf">
+				<div id="content">
+					<h2 id="title">MIMHS & MALCOM 2023</h2>
+					<p id="description">
+						Memories from MALCOM 2023
+					</p>
+					<button
+						id="btnEnter"
+						onclick="enterVR()"
+						class="bttn-unite bttn-lg bttn-default"
+					>
+						Enter
+					</button>
+				</div>
+			</div>
+		</div>
+		<!--Aframe Canvas-->
+		<div id="aframeCanvas">
+			<div id="blocker"></div>
+			<!--Control tutorial-->
+			<div id="controlPopup">
+				<div id="popupContainer" onclick="slideOut(this)">
+					<p id="popupTitle">Controls</p>
+					<div id="popupContent">
+						<span> Click</span>
+						<img class="popupIcons" src="assets/mouse.png" />
+						<span>+ Drag to move around </span>
+						<div class="break"></div>
+<!-- 						<div class="break"></div>
+						<span>Click</span>
+						<img id="arrowIcon" class="popupIcons" src="assets/arrow.png" />
+						<span>to teleport</span>
+						<div class="break"></div>
+						<span>Click</span>
+ 						<img class="popupIcons" src="assets/mcq1.png" />
+						<span>to answer multiple choice question</span>
+						<div class="break"></div>
+						<span>Hover over</span>ac Room
+						<img class="popupIcons" src="assets/plus.png" />
+						<span>for machine information</span>
+						<div class="break"></div>  -->
+					</div>
+				</div>
+			</div>
+			<!--Aframe canvas-->
+			<a-scene>
+				<!--Images Collection-->
+				<a-assets timeout="99999">
+					<img id="loc1" src="360Images/MALCOM_01.jpg" />
+					<img id="loc2" src="360Images/ixtc_pano_02.jpg" />
+					<img id="loc3" src="360Images/ixtc_pano_03.jpg" />
+					<img id="loc4" src="360Images/ixtc_pano_04.jpg" />
+					<img id="loc5" src="360Images/ixtc_pano_05.jpg" />
+					<img id="loc6" src="360Images/ixtc_pano_06.jpg" />
+					<img id="arrow" src="assets/arrow.png" />
+				</a-assets>
+				<!--360 Skybox-->
+				<a-sky id="skybox" radius="10" src="#loc1" rotation="0 270 0"> </a-sky>
+				<!--Camera & Cursor-->
+				<a-entity
+					id="cam"
+					position="0 0 0"
+					camera
+					look-controls="reverseMouseDrag: true; reverseTouchDrag: true;"
+					wasd-controls-enabled="false"
+					cursor="rayOrigin: mouse"
+				>
+				</a-entity>
+				<!--Hotspots UI-->			
+				<a-entity id="spots" hotspots>
+					<!--
+					<a-entity id="group-point1">
+						<a-image
+							id="p1loc2spot"
+							class="arrowPointer"
+							spot="linkto:#loc2;spotgroup:group-point2;nameLink:ixtc_pano_02;"
+							position="2.5 -3 -7.3"
+							rotation="90 180 0"
+							scale="0.9 0.9 0.9"
+						></a-image>
+						<a-image
+						id="p1loc6spot"
+						class="arrowPointer"
+						spot="linkto:#loc6;spotgroup:group-point6;nameLink:ixtc_pano_06;"
+						position="9 -2 1.5"
+						rotation="90 180 0"
+						scale="0.9 0.9 0.9"
+						></a-image>
+						<!-- <a-entity
+							id="dialog1"
+							position="-1.75 -2 -2.6"
+							dialog-popup="
+						title: AHU (Air Handling Unit);
+						body:-An air handling unit conditions and distributes air within a building;		  
+						image: hotspots/AHU.jpg;"
+						></a-entity>					 -->
+						<!-- <a-entity
+						id="quest1"
+						position="0.2 1.6 3.5"
+						dialog-question="
+	  question: What is the Chilled Water Supply (CHWS) temperature?;
+	  answer: 5°C()/7.2°C()10°C()14°C;"
+						></a-entity> -->
+						<!-- <a-text
+							value="Chiller Room"
+							rotation="0 180 0"
+							wrap-count="20"
+							font="assets/raleway.json"
+							shader="msdf"
+							position="-0.2 0 3.2"
+							align="center"
+						></a-text> -->
+					</a-entity>
+				
+			
+
+
+
+
+
+					<a-entity id="group-point2" visible="false">
+						<a-image
+							id="p2loc1spot"
+							class="arrowPointer"
+							spot="linkto:#loc1;spotgroup:group-point1;nameLink:ixtc_pano_01;"
+							position="-5 -3 7"
+							rotation="90 0 0"
+							scale="0.9 0.9 0.9"
+						></a-image>
+						<a-image
+							id="p2loc3spot"
+							class="arrowPointer"
+							spot="linkto:#loc3;spotgroup:group-point3;nameLink:ixtc_pano_03;"
+							position="8 -2.5 -0.25"
+							rotation="90 270 0"
+							scale="0.9 0.9 0.9"
+						></a-image>
+						<!-- <a-entity
+							id="dialog2"
+							position="-1.4 -1.2 3.7"
+							dialog-popup="
+						title: Sensors for filter in AHU;
+						body: - The sensors record the pressure before and after the filter.\n\n- High pressure loss across a filter is an indication of a dirty filter.;		  
+						image: hotspots/ahumodel.jpg;"
+						></a-entity> -->
+					</a-entity>
+					<a-entity id="group-point3" visible="false">
+						<a-image
+							id="p3loc2spot"
+							class="arrowPointer"
+							spot="linkto:#loc2;spotgroup:group-point2;nameLink:ixtc_pano_02;"
+							position="-8 -2.5 -0.20"
+							rotation="90 95 0"
+							scale="0.7 0.7 0.7"
+						></a-image>
+						<a-image
+							id="p3loc4spot"
+							class="arrowPointer"
+							spot="linkto:#loc4;spotgroup:group-point4;nameLink:ixtc_pano_04;"
+							position="9 -2.5 0"
+							rotation="90 95 0"
+							scale="0.9 0.9 0.9"
+						></a-image>
+						<!-- <a-entity
+							id="dialog3"
+							position="0.7 -3.3 3"
+							dialog-popup="
+						title: Condensate Pipe;
+						body:- It will drain the condensate water from the coil in the AHU to be discharged in the floor trap.\n\nSustainability\n- For sustainability, all the condensate water from the AHUs is collected and used to top up the condenser water at the cooling tower.;		  
+						image: hotspots/condensatepipe.jpg;"
+						></a-entity> -->
+					</a-entity>
+					<a-entity id="group-point4" visible="false">
+						<a-image
+							id="p4loc3spot"
+							class="arrowPointer"
+							spot="linkto:#loc3;spotgroup:group-point3;nameLink:ixtc_pano_03;"
+							position="-9 -2 0"
+							rotation="90 170 0"
+							scale="0.9 0.9 0.9"
+						></a-image>
+						<a-image
+							id="p4loc5spot"
+							class="arrowPointer"
+							spot="linkto:#loc5;spotgroup:group-point5;nameLink:ixtc_pano_05;"
+							position="0 -3 9"
+							rotation="90 80 0"
+							scale="0.9 0.9 0.9"
+						></a-image>
+						<!-- <a-entity
+							id="dialog4"
+							position="1.7 1.9 -3"
+							dialog-popup="
+						title: Chilled Water Pipe;
+						body:- The Chilled Water Supply (CHWS) pipe will supply chilled water to the AHU.\n\n- Heat will be absorbed by the chilled water from the coil in the AHU and return back to the chiller through the Chilled Water return (CHWR) pipe.;
+						image: hotspots/cwp.jpg;"
+						></a-entity> -->
+					</a-entity>
+					<a-entity id="group-point5" visible="false">
+						<a-image
+							id="p5loc4spot"
+							class="arrowPointer"
+							spot="linkto:#loc4;spotgroup:group-point4;nameLink:ixtc_pano_04;"
+							position="0 -3 -9"
+							rotation="90 275 0"
+							scale="0.9 0.9 0.9"
+						></a-image>
+						<a-image
+							id="p5loc6spot"
+							class="arrowPointer"
+							spot="linkto:#loc6;spotgroup:group-point6;nameLink:ixtc_pano_06;"
+							position="-9 -2 0.3"
+							rotation="90 185 0"
+							scale="0.9 0.9 0.9"
+						></a-image>
+					</a-entity>
+					<a-entity id="group-point6" visible="false">
+						<a-image
+							id="p6loc5spot"
+							class="arrowPointer"
+							spot="linkto:#loc5;spotgroup:group-point5;nameLink:ixtc_pano_05;"
+							position="9 -2.5 0"
+							rotation="90 5 0"
+							scale="0.9 0.9 0.9"
+						></a-image>
+						<a-image
+							id="p6loc1spot"
+							class="arrowPointer"
+							spot="linkto:#loc1;spotgroup:group-point1;nameLink:ixtc_pano_01;"
+							position="-9 -2 0"
+							rotation="90 185 0"
+							scale="0.9 0.9 0.9"
+						></a-image>
+						<!-- <a-entity
+							id="dialog5"
+							position="-2.2 -1.7 5.5"
+							dialog-popup="
+						title: Centrifugal fan in the AHU;
+						body:- To supply cooled air into the A/C space.\n\nMaintenance\n- Cleaning of fan housing and blades.\n- Lubricate and adjust of fan belts.\n- Monitor of vibration and noise.;	  
+						image: hotspots/centrifugalfan.jpg;"
+						></a-entity> -->
+						<!-- <a-entity
+							id="dialog6"
+							position="-2 -2.2 -2.7"
+							dialog-popup="
+						title: Cooling coil in the AHU;
+						body:- Chilled water will flow through the coil\n- Centrifugal fan sucks the supply air through these coil, it is cooled and supply to the A/C space.\n\nMaintenance\n- Coil cleanliness directly affects the efficiency of heat transfer. A clean coil will also lower resistance to air flow and thus lower power consumption from fans.\n- Cleaning dirty coils is often deferred because it is unpleasant and time consuming.\n- The best coil cleaning strategy is to prevent it from becoming dirty by regular filter maintenance.;	  
+						image: hotspots/coolingcoil.jpg;"
+						></a-entity> -->
+					</a-entity>
+				</a-entity>
+			</a-scene>
+		</div>
+	</body>
+</html>
